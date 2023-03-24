@@ -1,7 +1,16 @@
 import { FC } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './styled/globalStyle';
+import { theme } from './styled/theme';
 
 const App: FC = () => {
-	return <h1>Hello</h1>;
+	return (
+		<>
+			<ThemeProvider theme={theme}>
+				<GlobalStyle />
+			</ThemeProvider>
+		</>
+	);
 };
 
 export default App;
