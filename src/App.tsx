@@ -2,16 +2,14 @@ import { FC } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './styled/globalStyle';
 import { theme } from './styled/theme';
-import MainLayout from './components/layout/MainLayout';
+import Masters from './pages/Masters/Masters';
 
 const App: FC = () => {
 	return (
 		<>
 			<ThemeProvider theme={theme}>
 				<GlobalStyle />
-				<MainLayout pageNumber={1} pageTitle="Scegli Barbiere">
-					Hello
-				</MainLayout>
+				<Masters />
 			</ThemeProvider>
 		</>
 	);
