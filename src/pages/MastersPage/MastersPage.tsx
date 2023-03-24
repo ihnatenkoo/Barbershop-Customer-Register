@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import MainLayout from '../../components/layout/MainLayout';
-import Master from '../../components/Master';
+import Master from '../../components/Master/Master';
 import { masters } from '../../mock-data/masters';
 import { Container } from '../../styled/mixins';
 
@@ -25,7 +25,7 @@ const ButtonWrapper = styled.div`
 	}
 `;
 
-const Masters = () => {
+const MastersPage = () => {
 	return (
 		<MainLayout pageNumber={1} pageTitle={'Scegli Barbiere'}>
 			<PageContainer>
@@ -49,4 +49,4 @@ const Masters = () => {
 	);
 };
 
-export default Masters;
+export default MastersPage;

@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Flex } from '../styled/mixins';
+import { Flex } from '../../styled/mixins';
 import styled, { css } from 'styled-components';
-import { gradientAnimate } from '../styled/animations';
+import { gradientAnimate } from '../../styled/animations';
 
 interface PropsActiveMaster {
 	active?: boolean;
