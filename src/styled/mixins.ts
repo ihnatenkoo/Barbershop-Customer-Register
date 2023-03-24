@@ -22,3 +22,13 @@ export const Flex = ({
 	align-items: ${align || 'stretch'};
 	gap: ${gap || '0 0'};
 `;
+
+interface IContainerProps {
+	width?: string;
+}
+
+export const Container = ({ width }: IContainerProps) => css`
+	width: ${width || '1200px'};
+	margin: 0 auto;
+	max-width: 100%;
+`;
