@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import MainLayout from '../../components/layout/MainLayout';
+import Master from '../../components/Master';
+import { masters } from '../../mock-data/masters';
 import { Container } from '../../styled/mixins';
 
 const PageContainer = styled.div`
@@ -27,7 +29,15 @@ const Masters = () => {
 	return (
 		<MainLayout pageNumber={1} pageTitle={'Scegli Barbiere'}>
 			<PageContainer>
-				<p>Masters</p>
+				<ul>
+					{masters &&
+						masters.map((m) => (
+							<li key={m._id}>
+								<Master name={m.name} photoLink={m.avatar} />
+							</li>
+						))}
+				</ul>
+
 				<p>Services</p>
 
 				<Note>** A partire da</Note>
