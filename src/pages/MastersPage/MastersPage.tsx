@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { masters } from '../../mock-data/masters';
 import { Container } from '../../styled/mixins';
 import styled from 'styled-components';
 import MainLayout from '../../components/layout/MainLayout';
-import Master from '../../components/Master/Master';
-import { setCurrentMaster } from '../../store/order/order.slice';
+import MastersList from '../../components/Master/MastersList';
+import { masters } from '../../mock-data/masters';
 
 const PageContainer = styled.div`
 	${Container({ width: '770px' })}
@@ -29,23 +26,10 @@ const ButtonWrapper = styled.div`
 `;
 
 const MastersPage = () => {
-	const dispatch = useAppDispatch();
-	useEffect(() => {
-		dispatch(setCurrentMaster(masters[0]));
-	}, []);
-
 	return (
 		<MainLayout pageNumber={1} pageTitle={'Scegli Barbiere'}>
 			<PageContainer>
-				<ul>
-					{masters &&
-						masters.map((master) => (
-							<li key={master._id}>
-								<Master master={master} />
-							</li>
-						))}
-				</ul>
-
+				<MastersList masters={masters} />
 				<p>Services</p>
 
 				<Note>** A partire da</Note>

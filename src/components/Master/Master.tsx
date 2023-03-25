@@ -2,9 +2,8 @@ import { FC } from 'react';
 import { Flex } from '../../styled/mixins';
 import styled, { css } from 'styled-components';
 import { gradientAnimate } from '../../styled/animations';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { IMaster } from '../../types';
-import { setCurrentMaster } from '../../store/order/order.slice';
 
 interface PropsActiveMaster {
 	active?: boolean;
@@ -73,21 +72,16 @@ interface IMasterProps {
 }
 
 const Master: FC<IMasterProps> = ({ master }) => {
-	const dispatch = useAppDispatch();
-	const currentMaster = useAppSelector((state) => state.order.currentMaster);
 	const { _id, name, avatar } = master;
+	const currentMaster = useAppSelector((state) => state.order.currentMaster);
 
 	const isActiveMaster = (
 		currentMasterId: string | undefined,
 		masterId: string
 	): boolean => currentMasterId === masterId;
 
-	const onChangeMaster = (master: IMaster): void => {
-		dispatch(setCurrentMaster(master));
-	};
-
 	return (
-		<Main onClick={() => onChangeMaster(master)}>
+		<Main>
 			<Wrapper active={isActiveMaster(currentMaster?._id, _id)}>
 				<Circle active={isActiveMaster(currentMaster?._id, _id)}></Circle>
 				<Photo src={avatar} />
