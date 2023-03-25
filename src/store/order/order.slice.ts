@@ -1,0 +1,47 @@
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
+import { IMaster, IService } from '../../types';
+
+interface orderState {
+	currentMaster: IMaster | null;
+	selectedServices: Array<string>;
+	orderDay: string | null;
+}
+
+const initialState: orderState = {
+	currentMaster: null,
+	selectedServices: [],
+	orderDay: null,
+};
+
+export const orderSlice = createSlice({
+	name: 'order',
+	initialState,
+	reducers: {
+		setCurrentMaster: (state, action: PayloadAction<IMaster>) => {
+			state.currentMaster = action.payload;
+		},
+		addService: (state, action: PayloadAction<IService>) => {
+			const servicesSet = new Set(state.selectedServices);
+
+			servicesSet.has(action.payload.service)
+				? servicesSet.delete(action.payload.service)
+				: servicesSet.add(action.payload.service);
+
+			state.selectedServices = Array.from(servicesSet);
+		},
+		clearServicesList: (state) => {
+			state.selectedServices = [];
+		},
+		addOrderDay: (state, action: PayloadAction<Date>) => {
+			const formattedDate = dayjs(action.payload).format('YY.MM.DD');
+			state.orderDay = formattedDate;
+		},
+	},
+});
+
+export const { setCurrentMaster, addService, clearServicesList, addOrderDay } =
+	orderSlice.actions;
+
+export default orderSlice.reducer;

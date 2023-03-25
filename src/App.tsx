@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './styled/globalStyle';
 import { theme } from './styled/theme';
@@ -9,7 +11,9 @@ const App: FC = () => {
 		<>
 			<ThemeProvider theme={theme}>
 				<GlobalStyle />
-				<MastersPage />
+				<Provider store={store}>
+					<MastersPage />
+				</Provider>
 			</ThemeProvider>
 		</>
 	);
