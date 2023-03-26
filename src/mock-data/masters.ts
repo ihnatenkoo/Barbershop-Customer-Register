@@ -1,4 +1,4 @@
-export const masters = [
+const masters = [
 	{
 		_id: '630cd062651379283779ccfa',
 		name: 'Raffaele Vigliotta',
@@ -10,3 +10,7 @@ export const masters = [
 		avatar: 'https://i.ibb.co/jyqmnNj/image.png',
 	},
 ];
+
+export const getMasters = () => {
+	return masters;
+};

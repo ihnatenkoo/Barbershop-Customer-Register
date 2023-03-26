@@ -2,7 +2,9 @@ import { Container } from '../../styled/mixins';
 import styled from 'styled-components';
 import MainLayout from '../../components/layout/MainLayout';
 import MastersList from '../../components/Master/MastersList';
-import { masters } from '../../mock-data/masters';
+import { useEffect, useState } from 'react';
+import { getMasters } from '../../mock-data/masters';
+import { IMaster } from '../../types';
 
 const PageContainer = styled.div`
 	${Container({ width: '770px' })}
@@ -26,6 +28,14 @@ const ButtonWrapper = styled.div`
 `;
 
 const MastersPage = () => {
+	const [masters, setMasters] = useState<Array<IMaster> | null>(null);
+
+	useEffect(() => {
+		let getMastersWithDelay: ReturnType<typeof setTimeout>;
+		getMastersWithDelay = setTimeout(() => setMasters(getMasters()), 1250);
+		return () => clearTimeout(getMastersWithDelay);
+	}, []);
+
 	return (
 		<MainLayout pageNumber={1} pageTitle={'Scegli Barbiere'}>
 			<PageContainer>

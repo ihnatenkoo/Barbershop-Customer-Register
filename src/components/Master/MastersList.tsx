@@ -20,7 +20,7 @@ const MastersWrapper = styled.ul`
 `;
 
 interface IMastersListProps {
-	masters: Array<IMaster> | undefined;
+	masters: Array<IMaster> | null;
 }
 
 const MastersList: FC<IMastersListProps> = ({ masters }) => {
