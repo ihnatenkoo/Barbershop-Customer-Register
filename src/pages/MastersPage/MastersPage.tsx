@@ -1,12 +1,14 @@
-import { Container } from '../../styled/mixins';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useAppSelector } from '../../hooks';
+import { Container } from '../../styled/mixins';
+import { IMaster, IService } from '../../types';
+import { getMasters } from '../../mock-data/masters';
+import { getServices } from '../../mock-data/services';
 import MainLayout from '../../components/layout/MainLayout';
 import MastersList from '../../components/Master/MastersList';
-import { useEffect, useState } from 'react';
-import { getMasters } from '../../mock-data/masters';
-import { IMaster, IService } from '../../types';
-import { getServices } from '../../mock-data/services';
 import ServicesList from '../../components/ServicesList/ServicesList';
+import Button from '../../components/ui/Button';
 
 const PageContainer = styled.div`
 	${Container({ width: '770px' })}
@@ -32,6 +34,9 @@ const ButtonWrapper = styled.div`
 const MastersPage = () => {
 	const [masters, setMasters] = useState<Array<IMaster> | null>(null);
 	const [services, setServices] = useState<Array<IService> | null>(null);
+	const selectedServices = useAppSelector(
+		(state) => state.order.selectedServices
+	);
 
 	useEffect(() => {
 		let getDataWithDelay: ReturnType<typeof setTimeout>;
@@ -50,7 +55,7 @@ const MastersPage = () => {
 
 				<Note>** A partire da</Note>
 				<ButtonWrapper>
-					<button>AVANTI</button>
+					<Button disabled={!selectedServices.length}>AVANTI</Button>
 				</ButtonWrapper>
 			</PageContainer>
 		</MainLayout>
