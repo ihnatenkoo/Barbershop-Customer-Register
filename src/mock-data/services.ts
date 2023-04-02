@@ -133,3 +133,7 @@ export const services = [
 		price: 35,
 	},
 ];
+
+export const getServices = () => {
+	return services;
+};
