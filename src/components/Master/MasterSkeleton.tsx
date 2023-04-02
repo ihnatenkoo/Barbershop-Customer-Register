@@ -5,7 +5,7 @@ const MasterSkeleton = () => {
 		<ContentLoader
 			speed={2}
 			width={120}
-			height={187}
+			height={197}
 			viewBox="0 0 120 187"
 			backgroundColor="#f3f3f3"
 			foregroundColor="#ecebeb"
