@@ -15,7 +15,7 @@ const Box = styled.section`
 	position: relative;
 	width: 980px;
 	max-width: 90%;
-	height: 700px;
+	height: 740px;
 	box-shadow: 0 0 12px rgb(0 0 0 / 15%);
 	border-radius: 5px;
 `;

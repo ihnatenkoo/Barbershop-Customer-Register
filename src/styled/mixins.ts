@@ -1,6 +1,7 @@
 import { css } from 'styled-components';
 
 interface IFlexProps {
+	display?: string;
 	justify?: string;
 	align?: string;
 	direction?: string;
@@ -9,13 +10,14 @@ interface IFlexProps {
 }
 
 export const Flex = ({
+	display,
 	justify,
 	align,
 	direction,
 	gap,
 	wrap,
 }: IFlexProps) => css`
-	display: flex;
+	display: ${display || 'flex'};
 	flex-wrap: ${wrap || 'no-wrap'};
 	flex-direction: ${direction || 'row'};
 	justify-content: ${justify || 'stretch'};

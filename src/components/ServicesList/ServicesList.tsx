@@ -21,7 +21,7 @@ const Main = styled.div`
 	@media ${(props) => props.theme.media.tablet} {
 		flex-wrap: wrap;
 		height: 310px;
-		gap: 7px 0;
+		gap: 8px 0;
 	}
 `;
 
