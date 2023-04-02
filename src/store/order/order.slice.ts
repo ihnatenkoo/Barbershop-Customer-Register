@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
-import { IMaster, IService } from '../../types';
+import { IMaster } from '../../types';
 
 interface orderState {
 	currentMaster: IMaster | null;
@@ -22,7 +22,10 @@ export const orderSlice = createSlice({
 		setCurrentMaster: (state, action: PayloadAction<IMaster>) => {
 			state.currentMaster = action.payload;
 		},
-		addService: (state, action: PayloadAction<IService>) => {
+		addService: (
+			state,
+			action: PayloadAction<{ service: string }>
+		) => {
 			const servicesSet = new Set(state.selectedServices);
 
 			servicesSet.has(action.payload.service)

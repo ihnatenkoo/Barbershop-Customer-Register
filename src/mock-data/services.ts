@@ -125,13 +125,6 @@ export const services = [
 		time: 120,
 		price: 35,
 	},
-	{
-		_id: '63131af1293a372163cbe521',
-		masters: ['630cd062651379283779ccfa'],
-		service: 'Lisciante**',
-		time: 40,
-		price: 35,
-	},
 ];
 
 export const getServices = () => {
