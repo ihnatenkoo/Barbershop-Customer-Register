@@ -55,7 +55,7 @@ const MastersPage = () => {
 
 				<Note>** A partire da</Note>
 				<ButtonWrapper>
-					<Button disabled={!selectedServices.length}>AVANTI</Button>
+					<Button path='/order' disabled={!selectedServices.length}>AVANTI</Button>
 				</ButtonWrapper>
 			</PageContainer>
 		</MainLayout>
