@@ -62,7 +62,7 @@ const Circle = styled.div<PropsActiveMaster>`
 		props.active &&
 		css`
 			filter: none;
-			background: linear-gradient(180deg, #f3bf1b, #ff007a);
+			background: ${(props) => props.theme.gradients.main180};
 			animation: ${gradientAnimate} 2s infinite linear;
 		`}
 `;

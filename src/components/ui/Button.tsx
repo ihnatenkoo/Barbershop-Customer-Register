@@ -13,21 +13,27 @@ const StyledButton = styled.button<IActiveBtn>`
 		justify: 'center',
 		align: 'center',
 	})}
-	padding: 8px 0;
-	border: 2px solid #f3bf1b;
+
+	border: ${(props) => `2px solid ${props.theme.colors.white}`};
 	border-radius: 15px;
 	color: ${(props) => props.theme.colors.white};
-	background-color: ${(props) => props.theme.colors.accent};
+	background: ${(props) => props.theme.gradients.main80};
 	cursor: pointer;
 	outline: none;
 	user-select: none;
 	font-family: 'Rubik', sans-serif;
 	font-weight: 500;
 	font-size: 17px;
-	transition: all 0.15s ease-in;
+	transition: all 0.15s linear;
 
 	&:hover {
 		text-decoration: underline;
+	}
+
+	> a,
+	span {
+		padding: 8px 0;
+		width: 100%;
 	}
 
 	${(props) =>
@@ -35,8 +41,9 @@ const StyledButton = styled.button<IActiveBtn>`
 		css`
 			pointer-events: none;
 			opacity: 0.5;
-			color: ${(props) => props.theme.colors.accent};
-			background-color: transparent;
+			color: ${(props) => props.theme.colors.grayLight};
+			border: ${(props) => `2px solid ${props.theme.colors.grayLight}`};
+			background: ${(props) => props.theme.colors.white};
 		`};
 
 	@media ${(props) => props.theme.media.mobileL} {
@@ -64,7 +71,7 @@ const Button: FC<IButtonProps> = ({
 }) => {
 	return (
 		<StyledButton disabled={disabled} className={className} onClick={onClick}>
-			{path ? <Link to={path}>{children}</Link> : <>{children}</>}
+			{path ? <Link to={path}>{children}</Link> : <span>{children}</span>}
 		</StyledButton>
 	);
 };

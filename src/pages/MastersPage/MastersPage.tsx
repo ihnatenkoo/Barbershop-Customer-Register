@@ -39,8 +39,7 @@ const MastersPage = () => {
 	);
 
 	useEffect(() => {
-		let getDataWithDelay: ReturnType<typeof setTimeout>;
-		getDataWithDelay = setTimeout(() => {
+		const getDataWithDelay: ReturnType<typeof setTimeout> = setTimeout(() => {
 			setMasters(getMasters());
 			setServices(getServices());
 		}, 1250);
@@ -55,7 +54,9 @@ const MastersPage = () => {
 
 				<Note>** A partire da</Note>
 				<ButtonWrapper>
-					<Button path='/order' disabled={!selectedServices.length}>AVANTI</Button>
+					<Button path="/order" disabled={!selectedServices.length}>
+						AVANTI
+					</Button>
 				</ButtonWrapper>
 			</PageContainer>
 		</MainLayout>
