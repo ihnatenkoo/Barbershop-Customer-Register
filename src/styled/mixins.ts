@@ -30,7 +30,7 @@ interface IContainerProps {
 }
 
 export const Container = ({ width }: IContainerProps) => css`
-	width: ${width || '1200px'};
+	width: ${width || '770px'};
 	margin: 0 auto;
 	max-width: 100%;
 `;

@@ -11,7 +11,7 @@ import ServicesList from '../../components/ServicesList/ServicesList';
 import Button from '../../components/ui/Button';
 
 const PageContainer = styled.div`
-	${Container({ width: '770px' })}
+	${Container({})}
 `;
 
 const Note = styled.p`

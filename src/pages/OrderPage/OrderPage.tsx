@@ -3,7 +3,7 @@ import { Container } from '../../styled/mixins';
 import MainLayout from '../../components/layout/MainLayout';
 
 const PageContainer = styled.div`
-	${Container({ width: '770px' })}
+	${Container({})}
 `;
 
 const OrderPage = () => {
