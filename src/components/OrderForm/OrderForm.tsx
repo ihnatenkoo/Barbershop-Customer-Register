@@ -3,6 +3,8 @@ import { useAppSelector } from '../../hooks';
 import Button from '../ui/Button';
 import { Flex } from '../../styled/mixins';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { isValidEmail } from '../../utils/validateEmail';
 
 const Form = styled.form`
 	${Flex({ direction: 'column', gap: '23px 0' })}
@@ -37,13 +39,22 @@ const FormButton = styled(Button)`
 	align-self: flex-end;
 `;
 
+interface FormData {
+	orderTime: string;
+	customerName: string;
+	email: string;
+	phone: number;
+}
+
 const OrderForm: FC = () => {
 	const [orderInfo, setOrderInfo] = useState({
 		orderTime: '',
 		customerName: '',
-		comment: '',
+		email: '',
 		phone: '',
 	});
+
+	const { register, handleSubmit } = useForm<FormData>();
 
 	const currentMasterID = useAppSelector(
 		(state) => state.order.currentMaster?._id
@@ -60,19 +71,19 @@ const OrderForm: FC = () => {
 		});
 	};
 
-	const onSubmitForm = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-		e.preventDefault();
-		if (!orderDay || !currentMasterID) {
-			return;
-		}
+	const onSubmitForm = (data: FormData): void => {
+		console.log(data);
+		// e.preventDefault();
+		// if (!orderDay || !currentMasterID) {
+		// 	return;
+		// }
 	};
 
 	return (
-		<Form onSubmit={onSubmitForm}>
+		<Form onSubmit={handleSubmit(onSubmitForm)}>
 			<Label>
 				<span>Scegli lora? (time)</span>
 				<Input
-					type="text"
 					name="orderTime"
 					value={orderInfo.orderTime}
 					onChange={handleOrderInfoChange}
@@ -82,34 +93,36 @@ const OrderForm: FC = () => {
 			<Label>
 				<span>Come ti chiami? (name)</span>
 				<Input
-					type="text"
-					name="customerName"
-					onChange={handleOrderInfoChange}
-					value={orderInfo.customerName}
+					{...register('customerName', {
+						required: true,
+						minLength: 3,
+						maxLength: 20,
+						pattern: /^[A-Za-z]+$/i,
+					})}
 				/>
 			</Label>
 
 			<Label>
 				<span>E-mail:</span>
 				<Input
-					type="text"
-					name="Email"
-					onChange={handleOrderInfoChange}
-					value={orderInfo.phone}
+					{...register('email', {
+						required: true,
+						validate: { isValidEmail },
+					})}
 				/>
 			</Label>
 
 			<Label>
 				<span> Numero di telefono:</span>
 				<Input
-					type="text"
+					type="number"
 					name="phone"
 					onChange={handleOrderInfoChange}
 					value={orderInfo.phone}
 				/>
 			</Label>
 
-			<FormButton disabled>AVANTI</FormButton>
+			<FormButton>AVANTI</FormButton>
 		</Form>
 	);
 };
