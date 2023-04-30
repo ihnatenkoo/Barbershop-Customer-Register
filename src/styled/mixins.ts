@@ -34,3 +34,19 @@ export const Container = ({ width }: IContainerProps) => css`
 	margin: 0 auto;
 	max-width: 100%;
 `;
+
+export const Input = () => css`
+	padding: 16px;
+	box-shadow: 0 0 12px rgb(0 0 0 / 15%);
+	border-radius: 15px;
+	border: none;
+	width: 280px;
+	font-family: 'Roboto';
+	font-size: 16px;
+
+	&:focus {
+		outline-color: ${(props) => props.theme.colors.accent};
+		outline-style: solid;
+		outline-width: 3px;
+	}
+`;
