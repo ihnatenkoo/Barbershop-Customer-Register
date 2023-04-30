@@ -1,13 +1,14 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { useAppSelector } from '../../hooks';
-import Button from '../ui/Button';
-import { Flex } from '../../styled/mixins';
-import styled from 'styled-components';
+import { ChangeEvent, FC, MouseEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import { useAppSelector } from '../../hooks';
+import { freeOrderTime } from '../../mock-data/time';
 import { isValidEmail } from '../../utils/validateEmail';
+import { Flex, Input as InputFiled } from '../../styled/mixins';
+import Button from '../ui/Button';
 
 const Form = styled.form`
-	${Flex({ direction: 'column', gap: '23px 0' })}
+	${Flex({ direction: 'column', gap: '24px 0' })}
 `;
 
 const Label = styled.label`
@@ -20,18 +21,29 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-	padding: 16px;
-	box-shadow: 0 0 12px rgb(0 0 0 / 15%);
-	border-radius: 15px;
-	border: none;
-	width: 280px;
-	font-family: 'Roboto';
-	font-size: 16px;
+	${InputFiled()}
+`;
 
-	&:focus {
-		outline-color: ${(props) => props.theme.colors.accent};
-		outline-style: solid;
-		outline-width: 3px;
+const TimeList = styled.ul`
+	padding: 8px 0;
+	position: absolute;
+	width: 100%;
+	height: 312px;
+	top: 85px;
+	border-radius: 15px;
+	background-color: ${(props) => props.theme.colors.white};
+	box-shadow: 0 0 12px rgb(0 0 0 / 15%);
+	overflow-y: scroll;
+	z-index: 1;
+`;
+
+const TimeItem = styled.li`
+	padding: 8px 8px 8px 16px;
+	&:hover {
+		cursor: pointer;
+		background-color: ${(props) => props.theme.colors.white};
+		color: ${(props) => props.theme.colors.accent};
+		box-shadow: 0px 0px 8px -3px rgba(0, 0, 0, 0.75);
 	}
 `;
 
@@ -53,18 +65,17 @@ const OrderForm: FC = () => {
 		email: '',
 		phone: '',
 	});
+	const [isShowTimePopup, setIsShowTimePopup] = useState<boolean>(false);
+	const [time, setTime] = useState<string>(freeOrderTime[0]);
 
 	const { register, handleSubmit } = useForm<FormData>();
 
 	const currentMasterID = useAppSelector(
 		(state) => state.order.currentMaster?._id
 	);
-
 	const orderDay = useAppSelector((state) => state.order.orderDay);
 
-	const handleOrderInfoChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	): void => {
+	const handleOrderInfoChange = (e: ChangeEvent<HTMLInputElement>): void => {
 		setOrderInfo({
 			...orderInfo,
 			[e.target.name]: e.target.value,
@@ -72,22 +83,35 @@ const OrderForm: FC = () => {
 	};
 
 	const onSubmitForm = (data: FormData): void => {
-		console.log(data);
-		// e.preventDefault();
-		// if (!orderDay || !currentMasterID) {
-		// 	return;
-		// }
+		if (!orderDay || !currentMasterID) {
+			return;
+		}
+
+		console.log({ time, ...data });
+	};
+
+	const onToggleTimePopup = () => {
+		setIsShowTimePopup((prevState) => !prevState);
+	};
+
+	const onChangeTime = (e: MouseEvent) => {
+		setTime((e.target as HTMLLIElement).innerText);
 	};
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmitForm)}>
-			<Label>
+			<Label style={{ position: 'relative' }}>
 				<span>Scegli lora? (time)</span>
-				<Input
-					name="orderTime"
-					value={orderInfo.orderTime}
-					onChange={handleOrderInfoChange}
-				/>
+				<Input value={time} readOnly onClick={onToggleTimePopup} />
+				{isShowTimePopup && (
+					<TimeList>
+						{freeOrderTime.map((time) => (
+							<TimeItem onClick={onChangeTime} key={time}>
+								{time}
+							</TimeItem>
+						))}
+					</TimeList>
+				)}
 			</Label>
 
 			<Label>
