@@ -1,5 +1,7 @@
-import { ChangeEvent, FC, MouseEvent, useState } from 'react';
-import { useForm } from 'react-hook-form';
+/* eslint-disable no-nonoctal-decimal-escape */
+import { FC, MouseEvent, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
 import { freeOrderTime } from '../../mock-data/time';
@@ -21,6 +23,9 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+	${InputFiled()}
+`;
+const PhoneInput = styled(InputMask)`
 	${InputFiled()}
 `;
 
@@ -59,30 +64,27 @@ interface FormData {
 }
 
 const OrderForm: FC = () => {
-	const [orderInfo, setOrderInfo] = useState({
-		orderTime: '',
-		customerName: '',
-		email: '',
-		phone: '',
-	});
 	const [isShowTimePopup, setIsShowTimePopup] = useState<boolean>(false);
 	const [time, setTime] = useState<string>(freeOrderTime[0]);
 
-	const { register, handleSubmit } = useForm<FormData>();
+	const {
+		control,
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<FormData>();
+
+	//TODO: show errors
+	console.log(errors);
 
 	const currentMasterID = useAppSelector(
 		(state) => state.order.currentMaster?._id
 	);
 	const orderDay = useAppSelector((state) => state.order.orderDay);
 
-	const handleOrderInfoChange = (e: ChangeEvent<HTMLInputElement>): void => {
-		setOrderInfo({
-			...orderInfo,
-			[e.target.name]: e.target.value,
-		});
-	};
-
 	const onSubmitForm = (data: FormData): void => {
+		console.log({ ...data, time, orderDay });
+
 		if (!orderDay || !currentMasterID) {
 			return;
 		}
@@ -138,11 +140,19 @@ const OrderForm: FC = () => {
 
 			<Label>
 				<span> Numero di telefono:</span>
-				<Input
-					type="number"
+				<Controller
 					name="phone"
-					onChange={handleOrderInfoChange}
-					value={orderInfo.phone}
+					control={control}
+					rules={{
+						required: 'Mobile number is required',
+						pattern: {
+							value: /^\+39 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+							message: 'Wrong mobile number',
+						},
+					}}
+					render={({ field }) => (
+						<PhoneInput mask="+3\9 (999) 999-99-99" {...field} />
+					)}
 				/>
 			</Label>
 
