@@ -23,10 +23,14 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-	${InputFiled()}
+	${InputFiled}
 `;
 const PhoneInput = styled(InputMask)`
-	${InputFiled()}
+	${InputFiled}
+`;
+
+const Error = styled.span`
+	color: ${(props) => props.theme.colors.red};
 `;
 
 const TimeList = styled.ul`
@@ -74,9 +78,6 @@ const OrderForm: FC = () => {
 		formState: { errors },
 	} = useForm<FormData>();
 
-	//TODO: show errors
-	console.log(errors);
-
 	const currentMasterID = useAppSelector(
 		(state) => state.order.currentMaster?._id
 	);
@@ -88,8 +89,6 @@ const OrderForm: FC = () => {
 		if (!orderDay || !currentMasterID) {
 			return;
 		}
-
-		console.log({ time, ...data });
 	};
 
 	const onToggleTimePopup = () => {
@@ -104,7 +103,12 @@ const OrderForm: FC = () => {
 		<Form onSubmit={handleSubmit(onSubmitForm)}>
 			<Label style={{ position: 'relative' }}>
 				<span>Scegli lora? (time)</span>
-				<Input value={time} readOnly onClick={onToggleTimePopup} />
+				<Input
+					value={time}
+					readOnly
+					onClick={onToggleTimePopup}
+					style={{ cursor: 'pointer' }}
+				/>
 				{isShowTimePopup && (
 					<TimeList>
 						{freeOrderTime.map((time) => (
@@ -120,22 +124,26 @@ const OrderForm: FC = () => {
 				<span>Come ti chiami? (name)</span>
 				<Input
 					{...register('customerName', {
-						required: true,
+						required: 'Name is required',
 						minLength: 3,
 						maxLength: 20,
 						pattern: /^[A-Za-z]+$/i,
 					})}
+					isError={!!errors?.customerName}
 				/>
+				{errors?.customerName && <Error>{errors?.customerName.message}</Error>}
 			</Label>
 
 			<Label>
 				<span>E-mail:</span>
 				<Input
 					{...register('email', {
-						required: true,
+						required: 'Email is required',
 						validate: { isValidEmail },
 					})}
+					isError={!!errors?.email}
 				/>
+				{errors?.email && <Error>{errors?.email.message}</Error>}
 			</Label>
 
 			<Label>
@@ -150,10 +158,16 @@ const OrderForm: FC = () => {
 							message: 'Wrong mobile number',
 						},
 					}}
-					render={({ field }) => (
-						<PhoneInput mask="+3\9 (999) 999-99-99" {...field} />
+					render={({ field: { ref, ...field } }) => (
+						<PhoneInput
+							{...field}
+							mask="+3\9 (999) 999-99-99"
+							inputRef={ref}
+							isError={!!errors?.phone}
+						/>
 					)}
 				/>
+				{errors?.phone && <Error>{errors?.phone?.message}</Error>}
 			</Label>
 
 			<FormButton>AVANTI</FormButton>
