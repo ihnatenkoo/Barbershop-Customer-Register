@@ -15,7 +15,7 @@ const PageContainer = styled.div`
 `;
 
 const Note = styled.p`
-	margin-top: 5px;
+	margin: 5px 0;
 	font-family: 'Rubik', sans-serif;
 	font-size: 11px;
 	font-weight: 100;

@@ -7,6 +7,7 @@ import OrderForm from '../../components/OrderForm/OrderForm';
 const PageContainer = styled.div`
 	${Container({})}
 	${Flex({ justify: 'space-between' })}
+	margin-top: 140px;
 `;
 
 const OrderPage = () => {

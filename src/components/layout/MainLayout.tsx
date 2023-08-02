@@ -11,7 +11,7 @@ const Main = styled.main`
 `;
 
 const Box = styled.section`
-	${Flex({ direction: 'column', justify: 'center', align: 'center' })}
+	${Flex({ direction: 'column' })}
 	position: relative;
 	width: 980px;
 	max-width: 90%;

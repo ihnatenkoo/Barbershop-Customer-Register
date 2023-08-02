@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle`
 		padding: 0;
 		box-sizing: border-box;
 		font-family: 'Russo One', sans-serif;
-		font-size: 15px;
+		font-size: 14px;
 	}
 	body {
 		overflow-x: hidden;
