@@ -116,7 +116,7 @@ export const Label = styled.label<PropsActiveService>`
 		display: block;
 		width: 18px;
 		height: 18px;
-		background: url('src/assets/icons/check.svg') no-repeat;
+		background: url('icons/check.svg') no-repeat;
 		background-size: 18px 18px;
 
 		opacity: 0;
