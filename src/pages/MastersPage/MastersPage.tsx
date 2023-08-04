@@ -11,11 +11,11 @@ import ServicesList from '../../components/ServicesList/ServicesList';
 import Button from '../../components/ui/Button';
 
 const PageContainer = styled.div`
-	${Container({ width: '770px' })}
+	${Container({})}
 `;
 
 const Note = styled.p`
-	margin-top: 5px;
+	margin: 5px 0;
 	font-family: 'Rubik', sans-serif;
 	font-size: 11px;
 	font-weight: 100;

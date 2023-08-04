@@ -6,6 +6,7 @@ import { GlobalStyle } from './styled/globalStyle';
 import { theme } from './styled/theme';
 import MastersPage from './pages/MastersPage/MastersPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import OrderPage from './pages/OrderPage/OrderPage';
 
 const App: FC = () => {
 	return (
@@ -15,8 +16,8 @@ const App: FC = () => {
 				<Provider store={store}>
 					<BrowserRouter>
 						<Routes>
-							<Route path='/' element={	<MastersPage />}/>
-							<Route path='/order' element={<h1>Order Page</h1>}/>
+							<Route path="/" element={<MastersPage />} />
+							<Route path="/order" element={<OrderPage />} />
 						</Routes>
 					</BrowserRouter>
 				</Provider>

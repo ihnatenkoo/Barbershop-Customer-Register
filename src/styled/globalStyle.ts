@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import './scroll.css';
 
 export const GlobalStyle = createGlobalStyle`
 	*, ::before, ::after {
@@ -6,7 +7,10 @@ export const GlobalStyle = createGlobalStyle`
 		padding: 0;
 		box-sizing: border-box;
 		font-family: 'Russo One', sans-serif;
-		font-size: 15px;
+		font-size: 14px;
+	}
+	body {
+		overflow-x: hidden;
 	}
 	ul {
 		list-style: none;
@@ -14,8 +18,5 @@ export const GlobalStyle = createGlobalStyle`
 	a {
 		color: inherit;
 		text-decoration: none;
-	}
-	body {
-		overflow-x: hidden;
 	}
 `;

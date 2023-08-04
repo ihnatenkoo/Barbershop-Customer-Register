@@ -15,7 +15,7 @@ const MastersWrapper = styled.ul`
 	margin-top: 105px;
 	list-style: none;
 	@media ${(props) => props.theme.media.tablet} {
-		margin-top: 80px;
+		margin-top: 100px;
 	}
 `;
 
