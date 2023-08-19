@@ -1,13 +1,17 @@
 /* eslint-disable no-nonoctal-decimal-escape */
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import styled from 'styled-components';
+
 import { useAppSelector } from '../../hooks';
+import { IUserInfo } from '../../types';
 import { freeOrderTime } from '../../mock-data/time';
 import { isValidEmail } from '../../utils/validateEmail';
 import { Flex, Input as InputFiled } from '../../styled/mixins';
 import Button from '../ui/Button';
+import { Modal } from '../Modal/Modal';
 
 const Form = styled.form`
 	${Flex({ direction: 'column', gap: '24px 0' })}
@@ -60,39 +64,30 @@ const FormButton = styled(Button)`
 	align-self: flex-end;
 `;
 
-interface IOrderFormProps {
-	onModalOpen: () => void;
-}
-
-interface FormData {
-	orderTime: string;
-	customerName: string;
-	email: string;
-	phone: number;
-}
-
-const OrderForm: FC<IOrderFormProps> = ({ onModalOpen }) => {
+const OrderForm: FC = () => {
 	const [isShowTimePopup, setIsShowTimePopup] = useState<boolean>(false);
-	const [time, setTime] = useState<string>(freeOrderTime[0]);
+	const [orderTime, setOrderTime] = useState<string>(freeOrderTime[0]);
+	const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const navigate = useNavigate();
 
 	const {
 		control,
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<FormData>();
+	} = useForm<IUserInfo>();
 
-	const currentMasterID = useAppSelector(
+	const currentMasterId = useAppSelector(
 		(state) => state.order.currentMaster?._id
 	);
-	const orderDay = useAppSelector((state) => state.order.orderDay);
+	const selectedServices = useAppSelector(
+		(state) => state.order.selectedServices
+	);
 
-	const onSubmitForm = (data: FormData): void => {
-		if (!orderDay || !currentMasterID) {
-			return;
-		}
-
-		onModalOpen();
+	const onSubmitForm = (userInfo: IUserInfo): void => {
+		setUserInfo(userInfo);
+		setIsModalOpen(true);
 	};
 
 	const onToggleTimePopup = () => {
@@ -100,15 +95,21 @@ const OrderForm: FC<IOrderFormProps> = ({ onModalOpen }) => {
 	};
 
 	const onChangeTime = (e: MouseEvent) => {
-		setTime((e.target as HTMLLIElement).innerText);
+		setOrderTime((e.target as HTMLLIElement).innerText);
 	};
+
+	useEffect(() => {
+		if (!selectedServices || !currentMasterId) {
+			navigate('/');
+		}
+	}, []);
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmitForm)}>
 			<Label style={{ position: 'relative' }}>
 				<span>Scegli lora? (time)</span>
 				<Input
-					value={time}
+					value={orderTime}
 					readOnly
 					onClick={onToggleTimePopup}
 					style={{ cursor: 'pointer' }}
@@ -175,6 +176,8 @@ const OrderForm: FC<IOrderFormProps> = ({ onModalOpen }) => {
 			</Label>
 
 			<FormButton>AVANTI</FormButton>
+
+			<Modal isOpen={isModalOpen}>{JSON.stringify(userInfo)}</Modal>
 		</Form>
 	);
 };

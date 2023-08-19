@@ -5,13 +5,13 @@ import { IMaster } from '../../types';
 
 interface orderState {
 	currentMaster: IMaster | null;
-	selectedServices: Array<string>;
+	selectedServices: Array<string> | null;
 	orderDay: string | null;
 }
 
 const initialState: orderState = {
 	currentMaster: null,
-	selectedServices: [],
+	selectedServices: null,
 	orderDay: null,
 };
 
@@ -22,10 +22,7 @@ export const orderSlice = createSlice({
 		setCurrentMaster: (state, action: PayloadAction<IMaster>) => {
 			state.currentMaster = action.payload;
 		},
-		addService: (
-			state,
-			action: PayloadAction<{ service: string }>
-		) => {
+		addService: (state, action: PayloadAction<{ service: string }>) => {
 			const servicesSet = new Set(state.selectedServices);
 
 			servicesSet.has(action.payload.service)
@@ -35,7 +32,7 @@ export const orderSlice = createSlice({
 			state.selectedServices = Array.from(servicesSet);
 		},
 		clearServicesList: (state) => {
-			state.selectedServices = [];
+			state.selectedServices = null;
 		},
 		addOrderDay: (state, action: PayloadAction<Date>) => {
 			const formattedDate = dayjs(action.payload).format('YY.MM.DD');

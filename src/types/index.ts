@@ -11,3 +11,9 @@ export interface IService {
 	time: number;
 	price: number;
 }
+
+export interface IUserInfo {
+	customerName: string;
+	email: string;
+	phone: number;
+}
