@@ -135,7 +135,7 @@ const OrderForm: FC = () => {
 						required: 'Name is required',
 						minLength: 3,
 						maxLength: 20,
-						pattern: /^[A-Za-z]+$/i,
+						pattern: /^[A-Za-zА-Яа-я]+$/i,
 					})}
 					isError={!!errors?.customerName}
 				/>

@@ -42,7 +42,7 @@ const MastersPage = () => {
 		const getDataWithDelay: ReturnType<typeof setTimeout> = setTimeout(() => {
 			setMasters(getMasters());
 			setServices(getServices());
-		}, 1250);
+		}, 1000);
 		return () => clearTimeout(getDataWithDelay);
 	}, []);
 
