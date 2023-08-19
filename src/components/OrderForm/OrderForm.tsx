@@ -60,6 +60,10 @@ const FormButton = styled(Button)`
 	align-self: flex-end;
 `;
 
+interface IOrderFormProps {
+	onModalOpen: () => void;
+}
+
 interface FormData {
 	orderTime: string;
 	customerName: string;
@@ -67,7 +71,7 @@ interface FormData {
 	phone: number;
 }
 
-const OrderForm: FC = () => {
+const OrderForm: FC<IOrderFormProps> = ({ onModalOpen }) => {
 	const [isShowTimePopup, setIsShowTimePopup] = useState<boolean>(false);
 	const [time, setTime] = useState<string>(freeOrderTime[0]);
 
@@ -84,11 +88,11 @@ const OrderForm: FC = () => {
 	const orderDay = useAppSelector((state) => state.order.orderDay);
 
 	const onSubmitForm = (data: FormData): void => {
-		console.log({ ...data, time, orderDay });
-
 		if (!orderDay || !currentMasterID) {
 			return;
 		}
+
+		onModalOpen();
 	};
 
 	const onToggleTimePopup = () => {
