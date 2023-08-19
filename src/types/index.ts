@@ -13,7 +13,7 @@ export interface IService {
 }
 
 export interface IUserInfo {
-	customerName: string;
+	customerName: string | null;
 	email: string;
-	phone: number;
+	phone: number | undefined;
 }

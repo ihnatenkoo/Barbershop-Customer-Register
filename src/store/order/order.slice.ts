@@ -2,17 +2,20 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import { IMaster } from '../../types';
+import { freeOrderTime } from '../../mock-data/time';
 
 interface orderState {
 	currentMaster: IMaster | null;
 	selectedServices: Array<string> | null;
 	orderDay: string | null;
+	orderTime: string;
 }
 
 const initialState: orderState = {
 	currentMaster: null,
 	selectedServices: null,
 	orderDay: null,
+	orderTime: freeOrderTime[0],
 };
 
 export const orderSlice = createSlice({
@@ -38,10 +41,18 @@ export const orderSlice = createSlice({
 			const formattedDate = dayjs(action.payload).format('YY.MM.DD');
 			state.orderDay = formattedDate;
 		},
+		addOrderTime: (state, action: PayloadAction<string>) => {
+			state.orderTime = action.payload;
+		},
 	},
 });
 
-export const { setCurrentMaster, addService, clearServicesList, addOrderDay } =
-	orderSlice.actions;
+export const {
+	setCurrentMaster,
+	addService,
+	clearServicesList,
+	addOrderDay,
+	addOrderTime,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

@@ -5,13 +5,15 @@ import { useForm, Controller } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import styled from 'styled-components';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { IUserInfo } from '../../types';
 import { freeOrderTime } from '../../mock-data/time';
 import { isValidEmail } from '../../utils/validateEmail';
 import { Flex, Input as InputFiled } from '../../styled/mixins';
 import Button from '../ui/Button';
 import { Modal } from '../Modal/Modal';
+import { addUserInfo } from '../../store/user/user.slice';
+import { addOrderTime } from '../../store/order/order.slice';
 
 const Form = styled.form`
 	${Flex({ direction: 'column', gap: '24px 0' })}
@@ -66,10 +68,9 @@ const FormButton = styled(Button)`
 
 const OrderForm: FC = () => {
 	const [isShowTimePopup, setIsShowTimePopup] = useState<boolean>(false);
-	const [orderTime, setOrderTime] = useState<string>(freeOrderTime[0]);
-	const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
 	const {
 		control,
@@ -84,9 +85,10 @@ const OrderForm: FC = () => {
 	const selectedServices = useAppSelector(
 		(state) => state.order.selectedServices
 	);
+	const orderTime = useAppSelector((state) => state.order.orderTime);
 
-	const onSubmitForm = (userInfo: IUserInfo): void => {
-		setUserInfo(userInfo);
+	const onSubmitForm = (userInfo: IUserInfo) => {
+		dispatch(addUserInfo(userInfo));
 		setIsModalOpen(true);
 	};
 
@@ -95,7 +97,8 @@ const OrderForm: FC = () => {
 	};
 
 	const onChangeTime = (e: MouseEvent) => {
-		setOrderTime((e.target as HTMLLIElement).innerText);
+		const orderTime = (e.target as HTMLLIElement).innerText;
+		dispatch(addOrderTime(orderTime));
 	};
 
 	useEffect(() => {
@@ -174,10 +177,9 @@ const OrderForm: FC = () => {
 				/>
 				{errors?.phone && <Error>{errors?.phone?.message}</Error>}
 			</Label>
-
 			<FormButton>AVANTI</FormButton>
 
-			<Modal isOpen={isModalOpen}>{JSON.stringify(userInfo)}</Modal>
+			<Modal isOpen={isModalOpen}>Modal</Modal>
 		</Form>
 	);
 };
